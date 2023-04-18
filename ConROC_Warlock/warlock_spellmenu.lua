@@ -1460,7 +1460,7 @@ function ConROC:CheckFrame2()
 	--Soul Shard Count
 		local e1titemName = GetSpellInfo(23464); 
 		local _, _, e1titem = GetSpellInfo(23015);
-		local edit1 = CreateFrame("Frame", "ConROC_SM_Option_SoulShard_Frame", frame);
+		local edit1 = CreateFrame("Frame", "ConROC_SM_Option_SoulShard_Frame", frame, "BackdropTemplate");
 		edit1:SetBackdrop({bgFile = "Interface/Tooltips/UI-Tooltip-Background", tile = true, tileSize = 16, insets = {left = 0, right = 0, top = 0, bottom = 0},});
 		edit1:SetBackdropColor(0, 0, 0);
 		edit1:SetPoint("TOP", ConROCCheckFrame2, "BOTTOM", -75, 0);
