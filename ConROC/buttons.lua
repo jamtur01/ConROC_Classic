@@ -212,7 +212,7 @@ function ConROC:DisplayToggleFrame()
 			mframe:Hide();
 		end
 		
-	local frame = CreateFrame("Frame", "ConROCButtonFrame", UIParent, "BackdropTemplate")
+	local frame = CreateFrame("Frame", "ConROCButtonFrame", UIParent, BackdropTemplateMixin and "BackdropTemplate")
 		frame:SetClampedToScreen(true)
 		frame:SetPoint("TOPRIGHT", mframe, "BOTTOMLEFT", 5, 5)
 		frame:SetSize(54, 30);
@@ -661,7 +661,7 @@ end
 function ConROC:SpellmenuFrame()
 	local _, Class, classId = UnitClass("player")
 	local Color = RAID_CLASS_COLORS[Class]		
-	local frame = CreateFrame("Frame", "ConROCSpellmenuFrame", UIParent, "BackdropTemplate")
+	local frame = CreateFrame("Frame", "ConROCSpellmenuFrame", UIParent, BackdropTemplateMixin and "BackdropTemplate")
 
 		frame:SetFrameStrata('MEDIUM');
 		frame:SetFrameLevel('4')

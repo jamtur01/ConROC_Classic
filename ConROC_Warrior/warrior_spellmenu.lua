@@ -384,7 +384,7 @@ function ConROC:CheckFrame1()
 		check4text:SetPoint('LEFT', c4t, 'RIGHT', 5, 0);
 
 	--Sunder Armor Count
-		local edit1 = CreateFrame("Frame", "ConROC_SM_Debuff_SunderArmorCount_Frame", frame, "BackdropTemplate");
+		local edit1 = CreateFrame("Frame", "ConROC_SM_Debuff_SunderArmorCount_Frame", frame, BackdropTemplateMixin and "BackdropTemplate");
 		edit1:SetBackdrop({bgFile = "Interface/Tooltips/UI-Tooltip-Background", tile = true, tileSize = 16, insets = {left = 0, right = 0, top = 0, bottom = 0},});
 		edit1:SetBackdropColor(0, 0, 0);
 		edit1:SetPoint("LEFT", check4text, "RIGHT", 8, 0);
