@@ -1,7 +1,7 @@
 ## Title:-|cffFFFFFFConROC|r- |cffFFF569Rogue|r
 ## Version: 1.13.7
 ## Author: Vae
-## Interface: 11302
+## Interface: 11403
 ## SavedVariablesPerCharacter: ConROCRogueSpells
 ## Dependencies: ConROC
 ## LoadOnDemand: 1
