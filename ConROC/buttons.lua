@@ -767,11 +767,11 @@ function ConROC:SpellmenuFrame()
 			frameTitle:Show();
 			ConROCSpellmenuClass:Show();
 				if classId == 1 or classId == 3 or classId == 5 or classId == 8 then
-					frame:SetSize(180, 300);
+					frame:SetSize(205, 300);
 				elseif classId == 4 then
-					frame:SetSize(180, 465);
+					frame:SetSize(205, 465);
 				else
-					frame:SetSize(180, 530);
+					frame:SetSize(205, 530);
 				end
 	
 			ConROCSpellmenuFrame_CloseButton:Show();
