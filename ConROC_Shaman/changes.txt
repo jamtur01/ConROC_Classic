@@ -1,0 +1,8 @@
+Ver 1.13.2
+	-Overhauled Rotation.
+
+Ver 1.13.1
+	-Minor update.
+
+Ver 1.13.0
+	-Initial release for Classic WoW.

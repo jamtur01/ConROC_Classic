@@ -1,0 +1,11 @@
+## Title:-|cffFFFFFFConROC|r- |cffFF7D0ADruid|r
+## Version: 1.13.5
+## Author: Vae
+## Interface: 11302
+## SavedVariablesPerCharacter: ConROCDruidSpells
+## Dependencies: ConROC
+## LoadOnDemand: 1
+
+druid_ids.lua
+druid_spellmenu.lua
+druid.lua

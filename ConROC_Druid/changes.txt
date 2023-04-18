@@ -1,0 +1,20 @@
+Ver 1.13.5
+	-Added Tigers Fury to stealth section.
+	-Added elementals to bleed ignore list.
+
+Ver 1.13.4
+	-Fixing the Furor I forgot in the first place.
+
+Ver 1.13.3
+	-Forgot to add Furor talent and available mana to powershift check.
+
+Ver 1.13.2
+	-Added Stealth to catform. Sorry.
+	-Added a Powershift warning for when next ability will drain your energy. Needs testing and feeback.
+	-Slight QoL tweaks.
+
+Ver 1.13.1
+	-Forgot and did not notice that Tigers Fury didnt have a cooldown.
+
+Ver 1.13.0
+	-Initial release for Classic WoW.

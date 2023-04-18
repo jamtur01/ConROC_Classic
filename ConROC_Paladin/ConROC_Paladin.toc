@@ -1,0 +1,11 @@
+## Title:-|cffFFFFFFConROC|r- |cffF58CBAPaladin|r
+## Version: 1.13.11
+## Author: Vae
+## Interface: 11302
+## SavedVariablesPerCharacter: ConROCPaladinSpells
+## Dependencies: ConROC
+## LoadOnDemand: 1
+
+paladin_ids.lua
+paladin_spellmenu.lua
+paladin.lua

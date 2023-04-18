@@ -1,0 +1,26 @@
+Ver 1.13.7
+	-Added new spell ranks.
+
+Ver 1.13.6
+	-Tweaked wand use.
+
+Ver 1.13.5
+	-Adding Demonic Sacrifice coding.
+
+Ver 1.13.4
+	-Overhauled Rotation.
+	-Added Spellmenu.
+	
+Ver 1.13.3
+	-Minor update.
+
+Ver 1.13.2
+	-Added Wand support.
+	-Moved Demon Armor to RaidBuff.
+
+Ver 1.13.1
+	-Added pet coding.
+	-Tweaked Immolate to know when your casting.
+	
+Ver 1.13.0
+	-Initial release for Classic WoW.

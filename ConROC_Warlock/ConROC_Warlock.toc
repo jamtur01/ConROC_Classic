@@ -1,0 +1,11 @@
+## Title:-|cffFFFFFFConROC|r- |cff9482C9Warlock|r
+## Version: 1.13.7
+## Author: Vae
+## Interface: 11302
+## SavedVariablesPerCharacter: ConROCWarlockSpells
+## Dependencies: ConROC
+## LoadOnDemand: 1
+
+warlock_ids.lua
+warlock_spellmenu.lua
+warlock.lua

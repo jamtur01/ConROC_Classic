@@ -1,0 +1,41 @@
+Ver 1.13.11
+	-Small code fix for Seal of Wisdom. -Thanks Breakone9r
+
+Ver 1.13.10
+	-QoL Tweaks.
+	
+Ver 1.13.9
+	-QoL Tweaks.
+
+Ver 1.13.8
+	-Why didn't anyone tell me Seal of Light and Wisdom weren't working?
+
+Ver 1.13.7
+	-Fixed minor Seal issue. 
+	-Added profiles to SpellMenu including PvP.
+
+Ver 1.13.6
+	-Fixed Hammer of Justice rank issue.
+	-More Spellmenu work.
+
+Ver 1.13.5
+	-QoL
+
+Ver 1.13.4
+	-Fixed Blessing of Sanctuary in Spellmenu.
+	-Added Demon type to Exorcism
+
+Ver 1.13.3
+	-Second passover.
+	-SpellMenu work.
+	-Found Seal of the Crusader judgement SpellIDs.
+
+Ver 1.13.2
+	-Minor Tweaks.
+	-Starting work on Spellmenu.
+
+Ver 1.13.1
+	-Fixed Auras error.
+
+Ver 1.13.0
+	-Initial release for Classic WoW.
