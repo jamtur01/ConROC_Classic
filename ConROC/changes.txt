@@ -1,3 +1,7 @@
+Ver 2.0.1
+	-Added the need to press Alt to move the Spellmenu and its button
+	-Updated tooltips to anchor at cursor
+
 Ver 2.0.0
 	-Added more function to spellmenu and ability to hide. Still shows on Mouseover.
 

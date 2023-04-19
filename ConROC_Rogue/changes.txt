@@ -1,3 +1,8 @@
+Ver 1.13.8
+	- Updated to WotLK spells and talents
+	- Added buttons to apply your missing poisons
+	- Made Spellmenu into a scrolling area.
+
 Ver 1.13.7
 	-Tweaked Slice and Dice a little.
 

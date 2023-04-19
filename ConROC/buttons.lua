@@ -26,9 +26,57 @@ ConROC.WindowFramePool = {};
 ConROC.WindowFrames = {};
 ConROC.DefWindowFramePool = {};
 ConROC.DefWindowFrames = {};
+local optionsOpened = false;
 
+function ConROCTTOnEnter(self)
+	local ttFrameName = self:GetName();
+	--print(":GetName()", self:GetName());
+	GameTooltip_SetDefaultAnchor( GameTooltip, UIParent )
+		
+	if ttFrameName == "ConROCSpellmenuFrame_OpenButton" or "ConROCSpellmenuFrame_Title" then
+		GameTooltip:SetText("ConROC Rotation options")  -- This sets the top line of text, in gold.
+		if ttFrameName == "ConROCSpellmenuFrame_OpenButton" then
+			GameTooltip:AddLine('Click to show/hide options.', 1, 1, 1, true)
+			GameTooltip:AddLine(" ", 1, 1, 1, true)
+		end
+		GameTooltip:AddLine('Hold Alt to move frame', 1, 1, 1, true)
+	end
+
+	if ttFrameName == "ConROC_SingleButton" then --Single target rotation button
+		GameTooltip:SetText("ConROC Target Toggle")  -- This sets the top line of text, in gold.
+		GameTooltip:AddLine('MACRO = "/ConROCToggle"', 1, 1, 1, true)
+		GameTooltip:AddLine(" ", 1, 1, 1, true)
+		GameTooltip:AddLine("Single", .2, 1, .2)
+		GameTooltip:AddLine("This is for single target fights.", 1, 1, 1, true)
+		GameTooltip:AddLine("AoE", 1, .2, .2)
+		GameTooltip:AddLine("Can be used for trash or Boss fights with frequent adds.", 1, 1, 1, true)
+		GameTooltip:AddLine(" ", 1, 1, 1, true)
+		GameTooltip:AddLine('"This can be toggled during combat as phases change."', 1, 1, 0, true)
+	end
+	
+	if ttFrameName == "ConROCWindow" then
+		GameTooltip:SetText("ConROC Window")  -- This sets the top line of text, in gold.
+		GameTooltip:AddLine("", .2, 1, .2)
+		GameTooltip:AddLine("This window displays the next suggested ability in your rotation.", 1, 1, 1, true)
+	end
+
+	if ttFrameName == "ConROCDefenseWindow" then
+		GameTooltip:SetText("ConROC Defense Window")  -- This sets the top line of text, in gold.
+		GameTooltip:AddLine("", .2, 1, .2)
+		GameTooltip:AddLine("This window displays the next suggested defense ability in your rotation.", 1, 1, 1, true)
+	end
+
+	GameTooltip:Show()
+end
+
+function ConROCTTOnLeave(self)
+	GameTooltip:Hide()
+end
+--[[
 function TTOnEnter(self)
-	GameTooltip:SetOwner(self, "ANCHOR_PRESERVE")
+	print(":GetName()", self:GetName());
+	--GameTooltip:SetOwner(self, "ANCHOR_PRESERVE")
+	GameTooltip_SetDefaultAnchor( GameTooltip, UIParent )
 	GameTooltip:SetText("ConROC Target Toggle")  -- This sets the top line of text, in gold.
 	GameTooltip:AddLine('MACRO = "/ConROCToggle"', 1, 1, 1, true)
 	GameTooltip:AddLine(" ", 1, 1, 1, true)
@@ -44,9 +92,10 @@ end
 function TTOnLeave(self)
 	GameTooltip:Hide()
 end
-
+--not in use atm
 function ETOnEnter(self)
-	GameTooltip:SetOwner(self, "ANCHOR_PRESERVE")
+	--GameTooltip:SetOwner(self, "ANCHOR_PRESERVE")
+	GameTooltip_SetDefaultAnchor( GameTooltip, UIParent )
 	GameTooltip:SetText("ConROC Rotation Toggle")  -- This sets the top line of text, in gold.
 	GameTooltip:AddLine('MACRO = "/ConROCBurstToggle"', 1, 1, 1, true)
 	GameTooltip:AddLine(" ", 1, 1, 1, true)
@@ -64,7 +113,8 @@ function ETOnLeave(self)
 end
 
 function TWOnEnter(self)
-	GameTooltip:SetOwner(self, "ANCHOR_PRESERVE")
+	--GameTooltip:SetOwner(self, "ANCHOR_PRESERVE")
+	GameTooltip_SetDefaultAnchor( GameTooltip, UIParent )
 	GameTooltip:SetText("ConROC Window")  -- This sets the top line of text, in gold.
 	GameTooltip:AddLine("", .2, 1, .2)
 		GameTooltip:AddLine("This window displays the next suggested ability in your rotation.", 1, 1, 1, true)
@@ -76,7 +126,8 @@ function TWOnLeave(self)
 end
 
 function TDWOnEnter(self)
-	GameTooltip:SetOwner(self, "ANCHOR_PRESERVE")
+	--GameTooltip:SetOwner(self, "ANCHOR_PRESERVE")
+	GameTooltip_SetDefaultAnchor( GameTooltip, UIParent )
 	GameTooltip:SetText("ConROC Defense Window")  -- This sets the top line of text, in gold.
 	GameTooltip:AddLine("", .2, 1, .2)
 		GameTooltip:AddLine("This window displays the next suggested defense ability in your rotation.", 1, 1, 1, true)
@@ -86,43 +137,45 @@ end
 function TDWOnLeave(self)
 	GameTooltip:Hide()
 end
-
+--]]
 function TIWOnEnter(self)
-	GameTooltip:SetOwner(self, "ANCHOR_PRESERVE")
+	--GameTooltip:SetOwner(self, "ANCHOR_PRESERVE")
+	GameTooltip_SetDefaultAnchor( GameTooltip, UIParent )
 	GameTooltip:SetText("ConROC Interrupt Flash")  -- This sets the top line of text, in gold.
 	GameTooltip:AddLine("", .2, 1, .2)
 		GameTooltip:AddLine("This flash displays that you can interrupt.", 1, 1, 1, true)
 	GameTooltip:Show()
-	
+
 	local color = ConROC.db.profile.interruptOverlayColor;
 	ConROCInterruptWindow:SetSize(ConROC.db.profile.flashIconSize * .75, ConROC.db.profile.flashIconSize * .75);
-	ConROCInterruptWindow.texture:SetVertexColor(color.r, color.g, color.b);	
+	ConROCInterruptWindow.texture:SetVertexColor(color.r, color.g, color.b);
 end
 
 function TIWOnLeave(self)
 	GameTooltip:Hide()
-	
+
 	ConROCInterruptWindow:SetSize(ConROC.db.profile.flashIconSize * .25, ConROC.db.profile.flashIconSize * .25);
-	ConROCInterruptWindow.texture:SetVertexColor(.1, .1, .1);		
+	ConROCInterruptWindow.texture:SetVertexColor(.1, .1, .1);
 end
 
 function TPWOnEnter(self)
-	GameTooltip:SetOwner(self, "ANCHOR_PRESERVE")
+	--GameTooltip:SetOwner(self, "ANCHOR_PRESERVE")
+	GameTooltip_SetDefaultAnchor( GameTooltip, UIParent )
 	GameTooltip:SetText("ConROC Purge Flash")  -- This sets the top line of text, in gold.
 	GameTooltip:AddLine("", .2, 1, .2)
 		GameTooltip:AddLine("This flash displays that you can purge.", 1, 1, 1, true)
 	GameTooltip:Show()
-	
+
 	local color = ConROC.db.profile.purgeOverlayColor;
 	ConROCPurgeWindow:SetSize(ConROC.db.profile.flashIconSize * .75, ConROC.db.profile.flashIconSize * .75);
-	ConROCPurgeWindow.texture:SetVertexColor(color.r, color.g, color.b);		
+	ConROCPurgeWindow.texture:SetVertexColor(color.r, color.g, color.b);
 end
 
 function TPWOnLeave(self)
 	GameTooltip:Hide()
-	
+
 	ConROCPurgeWindow:SetSize(ConROC.db.profile.flashIconSize * .25, ConROC.db.profile.flashIconSize * .25);
-	ConROCPurgeWindow.texture:SetVertexColor(.1, .1, .1);	
+	ConROCPurgeWindow.texture:SetVertexColor(.1, .1, .1);
 end
 
 function ConROC:SlashUnlock()
@@ -131,40 +184,40 @@ function ConROC:SlashUnlock()
 	else
 		ConROC.db.profile.unlockWindow = false;
 	end
-	
+
 	ConROCWindow:EnableMouse(ConROC.db.profile.unlockWindow);
 	ConROCDefenseWindow:EnableMouse(ConROC.db.profile.unlockWindow);
 	ConROCPurgeWindow:EnableMouse(ConROC.db.profile.unlockWindow);
-	
+
 	if val == true and ConROC.db.profile.enablePurgeWindow == true then
-		ConROCPurgeWindow:Show();					
+		ConROCPurgeWindow:Show();
 	else
-		ConROCPurgeWindow:Hide();					
+		ConROCPurgeWindow:Hide();
 	end
 
 	if val == true or ConROC.db.profile.enableWindowBackground then
 		ConROCWindow.texture:Show();
 		ConROCDefenseWindow.texture:Show();
-	else 
+	else
 		ConROCWindow.texture:Hide();
 		ConROCDefenseWindow.texture:Hide();
 	end
-	
+
 	if ConROCSpellmenuMover ~= nil then
 		ConROCSpellmenuMover:EnableMouse(ConROC.db.profile.unlockWindow);
 		if val == true then
-			ConROCSpellmenuMover:Show();					
+			ConROCSpellmenuMover:Show();
 		else
-			ConROCSpellmenuMover:Hide();					
+			ConROCSpellmenuMover:Hide();
 		end
 	end
-	
+
 	if ConROCToggleMover ~= nil then
 		ConROCToggleMover:EnableMouse(ConROC.db.profile.unlockWindow);
 		if val == true then
-			ConROCToggleMover:Show();					
+			ConROCToggleMover:Show();
 		else
-			ConROCToggleMover:Hide();					
+			ConROCToggleMover:Hide();
 		end
 	end
 end
@@ -175,17 +228,17 @@ SlashCmdList["CONROCUNLOCK"] = function() ConROC:SlashUnlock() end
 function ConROC:DisplayToggleFrame()
 	local _, Class = UnitClass("player")
 	local Color = RAID_CLASS_COLORS[Class]
-	
+
 	local mframe = CreateFrame("Frame", "ConROCToggleMover", UIParent)
 		mframe:SetMovable(true)
 		mframe:SetClampedToScreen(true)
-		mframe:RegisterForDrag("LeftButton")	
+		mframe:RegisterForDrag("LeftButton")
 		mframe:SetScript("OnDragStart", function(self)
 			if ConROC.db.profile.unlockWindow then
 				mframe:StartMoving()
 			end
 		end)
-		mframe:SetScript("OnDragStop", mframe.StopMovingOrSizing)	
+		mframe:SetScript("OnDragStop", mframe.StopMovingOrSizing)
 		mframe:EnableMouse(ConROC.db.profile.unlockWindow)
 
 		mframe:SetPoint("CENTER", 250, -50)
@@ -193,46 +246,46 @@ function ConROC:DisplayToggleFrame()
 		mframe:SetFrameStrata('MEDIUM');
 		mframe:SetFrameLevel('4')
 		mframe:SetAlpha(1)
-	
+
 		local t = mframe.texture;
 			if not t then
-				t = mframe:CreateTexture("ARTWORK")
+				t = mframe:CreateTexture(nil, "ARTWORK")
 				t:SetTexture('Interface\\AddOns\\ConROC\\images\\magiccircle-purge');
 				t:SetBlendMode('BLEND');
 				t:SetAlpha(1);
 				t:SetVertexColor(.1, .1, .1);
 				mframe.texture = t;
 			end
-		
+
 		t:SetAllPoints(mframe)
-		
+
 		if ConROC.db.profile.unlockWindow then
 			mframe:Show();
 		else
 			mframe:Hide();
 		end
-		
-	local frame = CreateFrame("Frame", "ConROCButtonFrame", UIParent, BackdropTemplateMixin and "BackdropTemplate")
+
+	local frame = CreateFrame("Frame", "ConROCButtonFrame", UIParent,"BackdropTemplate")
 		frame:SetClampedToScreen(true)
 		frame:SetPoint("TOPRIGHT", mframe, "BOTTOMLEFT", 5, 5)
 		frame:SetSize(54, 30);
 		frame:SetScale(ConROC.db.profile.toggleButtonSize)
 		frame:SetFrameStrata('MEDIUM');
-		frame:SetFrameLevel('4')		
+		frame:SetFrameLevel('4')
 		frame:SetAlpha(1)
-		
-		frame:SetBackdrop( { 
-			bgFile = "Interface\\CHATFRAME\\CHATFRAMEBACKGROUND", 
+
+		frame:SetBackdrop( {
+			bgFile = "Interface\\CHATFRAME\\CHATFRAMEBACKGROUND",
 			edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
 			tile = true,
 			tileSize = 8,
-			edgeSize = 20, 
+			edgeSize = 20,
 			insets = {left = 4, right = 4, top = 4, bottom = 4}
 			})
 		frame:SetBackdropColor(0, 0, 0, .75)
 		frame:SetBackdropBorderColor(Color.r, Color.g, Color.b, .75)
 
-		
+
 	local otbutton = CreateFrame("Button", 'ConROC_SingleButton', frame)
 		otbutton:SetFrameStrata('MEDIUM')
 		otbutton:SetFrameLevel('6')
@@ -240,18 +293,18 @@ function ConROC:DisplayToggleFrame()
 		otbutton:SetSize(40, 16);
 		otbutton:Show()
 		otbutton:SetAlpha(1)
-		
+
 		otbutton:SetText("Single")
 		otbutton:SetNormalFontObject("GameFontHighlightSmall")
-		
-		otbutton:SetScript("OnEnter", TTOnEnter)
-		otbutton:SetScript("OnLeave", TTOnLeave)
-		
+
+		otbutton:SetScript("OnEnter", ConROCTTOnEnter)
+		otbutton:SetScript("OnLeave", ConROCTTOnLeave)
+
 	local ontex = otbutton:CreateTexture()
 		ontex:SetTexture("Interface\\AddOns\\ConROC\\images\\buttonUp")
 		ontex:SetTexCoord(0, 0.625, 0, 0.6875)
 		ontex:SetVertexColor(Color.r, Color.g, Color.b, 1)
-		ontex:SetAllPoints()	
+		ontex:SetAllPoints()
 		otbutton:SetNormalTexture(ontex)
 
 	local ohtex = otbutton:CreateTexture()
@@ -266,7 +319,7 @@ function ConROC:DisplayToggleFrame()
 		optex:SetVertexColor(Color.r, Color.g, Color.b, 1)
 		optex:SetAllPoints()
 		otbutton:SetPushedTexture(optex)
-		
+
 		otbutton:SetScript("OnMouseUp", function (self, otbutton, up)
 				self:Hide();
 				ConROC_AoEButton:Show();
@@ -279,10 +332,10 @@ function ConROC:DisplayToggleFrame()
 		tbutton:SetSize(40, 16);
 		tbutton:Hide();
 		tbutton:SetAlpha(1);
-		
+
 		tbutton:SetText("AoE");
 		tbutton:SetNormalFontObject("GameFontHighlightSmall");
-		
+
 		tbutton:SetScript("OnEnter", TTOnEnter)
 		tbutton:SetScript("OnLeave", TTOnLeave)
 
@@ -290,7 +343,7 @@ function ConROC:DisplayToggleFrame()
 		ntex:SetTexture("Interface\\AddOns\\ConROC\\images\\buttonUp")
 		ntex:SetTexCoord(0, 0.625, 0, 0.6875)
 		ntex:SetVertexColor(.50, .50, .50, 1)
-		ntex:SetAllPoints()	
+		ntex:SetAllPoints()
 		tbutton:SetNormalTexture(ntex)
 
 	local htex = tbutton:CreateTexture()
@@ -305,20 +358,20 @@ function ConROC:DisplayToggleFrame()
 		ptex:SetVertexColor(.50, .50, .50, 1)
 		ptex:SetAllPoints()
 		tbutton:SetPushedTexture(ptex)
-		
+
 		tbutton:SetScript("OnMouseUp", function (self, tbutton, up)
 				self:Hide();
 				ConROC_SingleButton:Show();
 		end)
 end
-	
+
 function ConROC:DisplayWindowFrame()
 	local frame = CreateFrame("Frame", "ConROCWindow", UIParent)
 		frame:SetMovable(true)
 		frame:SetClampedToScreen(true)
 		frame:RegisterForDrag("LeftButton")
-		frame:SetScript("OnEnter", TWOnEnter)
-		frame:SetScript("OnLeave", TWOnLeave)
+		frame:SetScript("OnEnter", ConROCTTOnEnter)
+		frame:SetScript("OnLeave", ConROCTTOnLeave)
 		frame:SetScript("OnDragStart", function(self)
 			if ConROC.db.profile.unlockWindow then
 				frame:StartMoving()
@@ -326,7 +379,7 @@ function ConROC:DisplayWindowFrame()
 		end)
 		frame:SetScript("OnDragStop", frame.StopMovingOrSizing)
 		frame:EnableMouse(ConROC.db.profile.unlockWindow)
-		
+
 		frame:SetPoint("CENTER", -200, 50)
 		frame:SetSize(ConROC.db.profile.windowIconSize, ConROC.db.profile.windowIconSize)
 		frame:SetFrameStrata('MEDIUM');
@@ -340,19 +393,19 @@ function ConROC:DisplayWindowFrame()
 		end
 	local t = frame.texture;
 		if not t then
-			t = frame:CreateTexture("ARTWORK")
+			t = frame:CreateTexture(nil, "ARTWORK")
 			t:SetTexture('Interface\\AddOns\\ConROC\\images\\Bigskull');
 			t:SetBlendMode('BLEND');
 			t:SetAlpha(ConROC.db.profile.transparencyWindow);
 			frame.texture = t;
 		end
-		
+
 		if ConROC.db.profile.enableWindowBackground or ConROC.db.profile.unlockWindow then
 			t:Show();
-		else 
+		else
 			t:Hide();
 		end
-		
+
 		t:SetAllPoints(frame)
 
 	local cd = CreateFrame("Cooldown", "ConROCWindowCooldown", frame, "CooldownFrameTemplate")
@@ -366,10 +419,10 @@ function ConROC:DisplayWindowFrame()
         cd:RegisterEvent("UNIT_SPELLCAST_FAILED");
 		cd:RegisterEvent("UNIT_SPELLCAST_START");
 		cd:RegisterEvent("UNIT_SPELLCAST_STOP");
-		
+
 		cd:SetAllPoints(frame);
 		cd:SetFrameStrata('MEDIUM');
-		cd:SetFrameLevel('7');			
+		cd:SetFrameLevel('7');
 		if ConROC.db.profile.enableWindowCooldown then
 			cd:SetScript("OnEvent",function(self)
 				local gcdStart, gcdDuration = GetSpellCooldown(29515)
@@ -384,7 +437,7 @@ function ConROC:DisplayWindowFrame()
 				else
 					local spStart  = startTimeMS / 1000;
 					local spDuration = endTimeMS/1000 - GetTime();
-					cd:SetCooldown(spStart, spDuration)			
+					cd:SetCooldown(spStart, spDuration)
 				end
 			end)
 		end
@@ -401,37 +454,37 @@ function ConROC:CreateDisplayWindow(parent, id)
 			fontkey = frame:CreateFontString("ConROC_HotKey_" .. id, "ARTWORK", "GameFontHighlight");
 		end
 
-	frame:SetParent("ConROCWindow");
+	frame:SetParent(ConROCWindow);
 	frame:SetFrameStrata('MEDIUM');
 	frame:SetFrameLevel('6');
 	frame:SetPoint('CENTER', 0, 0);
 	frame:SetSize(ConROC.db.profile.windowIconSize, ConROC.db.profile.windowIconSize);
 	frame:SetAlpha(ConROC.db.profile.transparencyWindow);
-	
+
 	fontstring:SetText(spellName);
 	fontstring:SetTextColor(Color.r, Color.g, Color.b, 1);
 	fontstring:SetPoint('BOTTOM', frame, 'TOP', 0, 2);
 	fontstring:SetWidth(ConROC.db.profile.windowIconSize + 20);
 	fontstring:SetHeight(ConROC.db.profile.windowIconSize);
-	fontstring:SetJustifyV("BOTTOM");	
+	fontstring:SetJustifyV("BOTTOM");
 
 	if ConROC.db.profile.enableWindowSpellName then
 		fontstring:Show();
-	else 
+	else
 		fontstring:Hide();
 	end
-	
+
 	fontkey:SetParent(frame);
 	fontkey:SetText(ConROC:FindKeybinding(id));
 	fontkey:SetPoint('TOP', frame, 'BOTTOM', 0, -2);
 	fontkey:SetTextColor(1, 1, 1, 1);
-	
+
 	if ConROC.db.profile.enableWindowKeybinds then
 		fontkey:Show();
-	else 
+	else
 		fontkey:Hide();
 	end
-		
+
 	local t = frame.texture;
 	if not t then
 		t = frame:CreateTexture('WindowIcon' .. id, 'BACKGROUND');
@@ -439,7 +492,7 @@ function ConROC:CreateDisplayWindow(parent, id)
 		t:SetBlendMode('BLEND');
 		frame.texture = t;
 	end
-	
+
 	t:SetAllPoints(frame);
 
 	tinsert(self.WindowFrames, frame);
@@ -451,16 +504,16 @@ function ConROC:DefenseWindowFrame()
 		frame:SetMovable(true);
 		frame:SetClampedToScreen(true);
 		frame:RegisterForDrag("LeftButton");
-		frame:SetScript("OnEnter", TDWOnEnter);
-		frame:SetScript("OnLeave", TDWOnLeave);
+		frame:SetScript("OnEnter", ConROCTTOnEnter);
+		frame:SetScript("OnLeave", ConROCTTOnLeave);
 		frame:SetScript("OnDragStart", function(self)
 			if ConROC.db.profile.unlockWindow then
 				frame:StartMoving()
 			end
 		end)
-		frame:SetScript("OnDragStop", frame.StopMovingOrSizing)		
+		frame:SetScript("OnDragStop", frame.StopMovingOrSizing)
 		frame:EnableMouse(ConROC.db.profile.unlockWindow);
-		
+
 		frame:SetPoint("CENTER", -250, 50);
 		frame:SetSize(ConROC.db.profile.windowIconSize * .75, ConROC.db.profile.windowIconSize * .75);
 		frame:SetFrameStrata('MEDIUM');
@@ -474,7 +527,7 @@ function ConROC:DefenseWindowFrame()
 		end
 	local t = frame.texture;
 		if not t then
-			t = frame:CreateTexture("ARTWORK")
+			t = frame:CreateTexture(nil, "ARTWORK")
 			t:SetTexture('Interface\\AddOns\\ConROC\\images\\shield2');
 			t:SetBlendMode('ADD');
 			t:SetAlpha(ConROC.db.profile.transparencyWindow);
@@ -482,15 +535,15 @@ function ConROC:DefenseWindowFrame()
 			t:SetVertexColor(color.r, color.g, color.b);
 			frame.texture = t;
 		end
-		
+
 		if ConROC.db.profile.enableWindowBackground or ConROC.db.profile.unlockWindow then
 			t:Show();
-		else 
+		else
 			t:Hide();
 		end
-		
+
 		t:SetAllPoints(frame)
-		
+
 	local cd = CreateFrame("Cooldown", "ConROCDefWindowCooldown", frame, "CooldownFrameTemplate")
 		cd:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START");
 		cd:RegisterEvent("UNIT_SPELLCAST_CHANNEL_UPDATE");
@@ -502,10 +555,10 @@ function ConROC:DefenseWindowFrame()
         cd:RegisterEvent("UNIT_SPELLCAST_FAILED");
 		cd:RegisterEvent("UNIT_SPELLCAST_START");
 		cd:RegisterEvent("UNIT_SPELLCAST_STOP");
-		
+
 		cd:SetAllPoints(frame);
 		cd:SetFrameStrata('MEDIUM');
-		cd:SetFrameLevel('7');			
+		cd:SetFrameLevel('7');
 		if ConROC.db.profile.enableWindowCooldown then
 			cd:SetScript("OnEvent",function(self)
 				local gcdStart, gcdDuration = GetSpellCooldown(29515)
@@ -520,10 +573,10 @@ function ConROC:DefenseWindowFrame()
 				else
 					local spStart  = startTimeMS / 1000;
 					local spDuration = endTimeMS/1000 - GetTime();
-					cd:SetCooldown(spStart, spDuration)			
+					cd:SetCooldown(spStart, spDuration)
 				end
 			end)
-		end		
+		end
 end
 
 function ConROC:CreateDefWindow(parent, id)
@@ -537,13 +590,13 @@ function ConROC:CreateDefWindow(parent, id)
 			fontkey = frame:CreateFontString("ConROC_DefHotKey_" .. id, "ARTWORK", "GameFontHighlight");
 		end
 
-	frame:SetParent("ConROCDefenseWindow");
+	frame:SetParent(ConROCDefenseWindow);
 	frame:SetFrameStrata('MEDIUM');
 	frame:SetFrameLevel('6');
 	frame:SetPoint('CENTER', 0, 0);
 	frame:SetSize(ConROC.db.profile.windowIconSize * .75, ConROC.db.profile.windowIconSize * .75);
 	frame:SetAlpha(ConROC.db.profile.transparencyWindow);
-	
+
 	fontstring:SetText(spellName);
 	fontstring:SetTextColor(Color.r, Color.g, Color.b, 1);
 	fontstring:SetPoint('BOTTOM', frame, 'TOP', 0, 2);
@@ -553,10 +606,10 @@ function ConROC:CreateDefWindow(parent, id)
 
 	if ConROC.db.profile.enableWindowSpellName then
 		fontstring:Show();
-	else 
+	else
 		fontstring:Hide();
 	end
-	
+
 	fontkey:SetParent(frame);
 	fontkey:SetText(ConROC:FindKeybinding(id));
 	fontkey:SetPoint('TOP', frame, 'BOTTOM', 0, -2);
@@ -564,10 +617,10 @@ function ConROC:CreateDefWindow(parent, id)
 
 	if ConROC.db.profile.enableWindowKeybinds then
 		fontkey:Show();
-	else 
+	else
 		fontkey:Hide();
 	end
-	
+
 	local t = frame.texture;
 	if not t then
 		t = frame:CreateTexture('DefWindowIcon' .. id, 'BACKGROUND');
@@ -575,7 +628,7 @@ function ConROC:CreateDefWindow(parent, id)
 		t:SetBlendMode('BLEND');
 		frame.texture = t;
 	end
-	
+
 	t:SetAllPoints(frame);
 
 	tinsert(self.DefWindowFrames, frame);
@@ -594,9 +647,9 @@ function ConROC:InterruptWindowFrame()
 				frame:StartMoving()
 			end
 		end)
-		frame:SetScript("OnDragStop", frame.StopMovingOrSizing)		
+		frame:SetScript("OnDragStop", frame.StopMovingOrSizing)
 		frame:EnableMouse(ConROC.db.profile.unlockWindow);
-		
+
 		frame:SetPoint("RIGHT", "ConROCWindow", "LEFT", -5, 0);
 		frame:SetSize(ConROC.db.profile.flashIconSize * .25, ConROC.db.profile.flashIconSize * .25);
 		frame:SetFrameStrata('MEDIUM');
@@ -609,15 +662,15 @@ function ConROC:InterruptWindowFrame()
 
 	local t = frame.texture;
 		if not t then
-			t = frame:CreateTexture("ARTWORK")
+			t = frame:CreateTexture(nil, "ARTWORK")
 			t:SetTexture('Interface\\AddOns\\ConROC\\images\\lightning-interrupt');
 			t:SetBlendMode('BLEND');
 			t:SetAlpha(ConROC.db.profile.transparencyWindow);
 			t:SetVertexColor(.1, .1, .1);
 			frame.texture = t;
 		end
-		
-		t:SetAllPoints(frame)		
+
+		t:SetAllPoints(frame)
 end
 
 function ConROC:PurgeWindowFrame()
@@ -632,9 +685,9 @@ function ConROC:PurgeWindowFrame()
 				frame:StartMoving()
 			end
 		end)
-		frame:SetScript("OnDragStop", frame.StopMovingOrSizing)		
+		frame:SetScript("OnDragStop", frame.StopMovingOrSizing)
 		frame:EnableMouse(ConROC.db.profile.unlockWindow);
-		
+
 		frame:SetPoint("LEFT", "ConROCWindow", "RIGHT", 5, 0);
 		frame:SetSize(ConROC.db.profile.flashIconSize * .25, ConROC.db.profile.flashIconSize * .25);
 		frame:SetFrameStrata('MEDIUM');
@@ -647,37 +700,37 @@ function ConROC:PurgeWindowFrame()
 
 	local t = frame.texture;
 		if not t then
-			t = frame:CreateTexture("ARTWORK")
+			t = frame:CreateTexture(nil, "ARTWORK")
 			t:SetTexture('Interface\\AddOns\\ConROC\\images\\magiccircle-purge');
 			t:SetBlendMode('BLEND');
 			t:SetAlpha(ConROC.db.profile.transparencyWindow);
 			t:SetVertexColor(.1, .1, .1);
 			frame.texture = t;
 		end
-		
-		t:SetAllPoints(frame)		
+
+		t:SetAllPoints(frame)
 end
 
 function ConROC:SpellmenuFrame()
 	local _, Class, classId = UnitClass("player")
-	local Color = RAID_CLASS_COLORS[Class]		
-	local frame = CreateFrame("Frame", "ConROCSpellmenuFrame", UIParent, BackdropTemplateMixin and "BackdropTemplate")
+	local Color = RAID_CLASS_COLORS[Class]
+	local frame = CreateFrame("Frame", "ConROCSpellmenuFrame", UIParent,"BackdropTemplate")
 
 		frame:SetFrameStrata('MEDIUM');
 		frame:SetFrameLevel('4')
 		frame:SetSize((90) + 14, (15) + 14)
-			if ConROC.db.profile._Hide_Spellmenu then 
+			if ConROC.db.profile._Hide_Spellmenu then
 				frame:SetAlpha(0);
 			 else
 				frame:SetAlpha(1);
 			end
-		
-		frame:SetBackdrop( { 
-			bgFile = "Interface\\CHATFRAME\\CHATFRAMEBACKGROUND", 
+
+		frame:SetBackdrop( {
+			bgFile = "Interface\\CHATFRAME\\CHATFRAMEBACKGROUND",
 			edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
 			tile = true,
 			tileSize = 8,
-			edgeSize = 20, 
+			edgeSize = 20,
 			insets = { left = 4, right = 4, top = 4, bottom = 4 }
 			})
 		frame:SetBackdropColor(0, 0, 0, .75)
@@ -687,10 +740,12 @@ function ConROC:SpellmenuFrame()
 		frame:SetMovable(true)
 		frame:EnableMouse(true)
 		frame:SetClampedToScreen(true)
-		frame:RegisterForDrag("LeftButton")		
+		frame:RegisterForDrag("LeftButton")
 		frame:SetScript("OnDragStart", function(self)
 			if ConROC.db.profile.unlockWindow then
-				frame:StartMoving()
+				if (IsAltKeyDown()) then
+					frame:StartMoving()
+				end
 			end
 		end)
 		frame:SetScript("OnDragStop", frame.StopMovingOrSizing)
@@ -699,7 +754,7 @@ function ConROC:SpellmenuFrame()
 		end)
 		frame:SetScript("OnLeave", function(self)
 			if not MouseIsOver(frame) then
-				if ConROC.db.profile._Hide_Spellmenu then 
+				if ConROC.db.profile._Hide_Spellmenu then
 					frame:SetAlpha(0);
 				 else
 					frame:SetAlpha(1);
@@ -708,19 +763,36 @@ function ConROC:SpellmenuFrame()
 		end)
 
 	local frameTitle = CreateFrame("Frame", "ConROCSpellmenuFrame_Title", frame)
-		
+
 		frameTitle:SetFrameStrata('MEDIUM');
 		frameTitle:SetFrameLevel('5');
 		frameTitle:SetSize(180, 20);
 		frameTitle:SetAlpha(1);
-		
+
 		frameTitle:SetPoint("TOP", frame, "TOP", 0, -8);
 		frameTitle:Hide();
+
+		frameTitle:SetScript("OnEnter", ConROCTTOnEnter)
+		frameTitle:SetScript("OnLeave", ConROCTTOnLeave)
+		--frameTitle:EnableMouse(false)
 		
+		frameTitle:RegisterForDrag("LeftButton")
+		frameTitle:SetScript("OnDragStart", function(self)
+			if ConROC.db.profile.unlockWindow then
+				if (IsAltKeyDown()) then
+					self:GetParent():StartMoving()
+				end
+			end
+		end)
+		frameTitle:SetScript("OnDragStop", function(self)
+			self:GetParent():StopMovingOrSizing()
+		end) --, frameTitle:GetParent().StopMovingOrSizing)
+
 	local fonttitle = frameTitle:CreateFontString(nil, "ARTWORK", "GameFontHighlight");
 		fonttitle:SetText(ConROC.Classes[classId] .. " Spells");
 		fonttitle:SetPoint('TOP', frameTitle, 'TOP', 0, 0);
-		
+
+
 	local otbutton = CreateFrame("Button", 'ConROCSpellmenuFrame_OpenButton', frame);
 		otbutton:SetFrameStrata('MEDIUM');
 		otbutton:SetFrameLevel('6');
@@ -728,10 +800,13 @@ function ConROC:SpellmenuFrame()
 		otbutton:SetSize(90, 15);
 		otbutton:Show();
 		otbutton:SetAlpha(1);
-		
+
 		otbutton:SetText(ConROC.Classes[classId] .. " Spells");
 		otbutton:SetNormalFontObject("GameFontHighlightSmall");
-		
+
+		otbutton:SetScript("OnEnter", ConROCTTOnEnter)
+		otbutton:SetScript("OnLeave", ConROCTTOnLeave)
+
 	local ontex = otbutton:CreateTexture();
 		ontex:SetTexture("Interface\\AddOns\\ConROC\\images\\buttonUp");
 		ontex:SetTexCoord(0, 0.625, 0, 0.6875);
@@ -754,28 +829,26 @@ function ConROC:SpellmenuFrame()
 
 		otbutton:SetScript("OnMouseDown", function (self, otbutton, up)
 			if ConROC.db.profile.unlockWindow then
-				frame:StartMoving();
+				if (IsAltKeyDown()) then
+					frame:StartMoving()
+				end
 			end
 		end)
-		
+
 		otbutton:SetScript("OnMouseUp", function (self, otbutton, up)
 			if ConROC.db.profile.unlockWindow then
 				frame:StopMovingOrSizing();
-			end			
-			
+			end
+		if not (IsAltKeyDown()) then
 			self:Hide();
 			frameTitle:Show();
 			ConROCSpellmenuClass:Show();
-				if classId == 1 or classId == 3 or classId == 5 or classId == 8 then
-					frame:SetSize(205, 300);
-				elseif classId == 4 then
-					frame:SetSize(205, 465);
-				else
-					frame:SetSize(205, 530);
-				end
-	
+			optionsOpened = true;
+			frame:SetSize(180, 300);
+
 			ConROCSpellmenuFrame_CloseButton:Show();
 			ConROC:SpellMenuUpdate();
+			end
 		end)
 
 	local tbutton = CreateFrame("Button", 'ConROCSpellmenuFrame_CloseButton', frame)
@@ -785,15 +858,15 @@ function ConROC:SpellmenuFrame()
 		tbutton:SetSize(12, 12)
 		tbutton:Hide()
 		tbutton:SetAlpha(1)
-		
+
 		tbutton:SetText("X")
 		tbutton:SetNormalFontObject("GameFontHighlightSmall")
-		
+
 	local ntex = tbutton:CreateTexture()
 		ntex:SetTexture("Interface\\AddOns\\ConROC\\images\\buttonUp")
 		ntex:SetTexCoord(0, 0.625, 0, 0.6875)
 		ntex:SetVertexColor(1, .1, .1, 1)
-		ntex:SetAllPoints()	
+		ntex:SetAllPoints()
 		tbutton:SetNormalTexture(ntex)
 
 	local htex = tbutton:CreateTexture()
@@ -808,34 +881,40 @@ function ConROC:SpellmenuFrame()
 		ptex:SetVertexColor(1, .1, .1, 1)
 		ptex:SetAllPoints()
 		tbutton:SetPushedTexture(ptex)
-		
+
 		tbutton:SetScript("OnMouseUp", function (self, tbutton, up)
 			self:Hide();
 			frameTitle:Hide();
 			ConROCSpellmenuClass:Hide();
 				frame:SetSize((90) + 14, (15) + 14);
 			ConROCSpellmenuFrame_OpenButton:Show();
+			optionsOpened = false;
 		end)
 end
 
 function ConROC:FindKeybinding(id)
 	local keybind;
-	
+
 		for k, button in pairs(self.Keybinds[id]) do
 			for i = 1, 12 do
 				if button == 'ElvUI_Bar1Button' .. i then
 					button = 'ACTIONBUTTON' .. i;
-				elseif button == 'MultiBarBottomLeftButton' .. i or button == 'ElvUI_Bar3Button' .. i then
+--				elseif button == 'MultiBarBottomLeftButton' .. i or button == 'ElvUI_Bar3Button' .. i then
+				elseif button == 'MultiBarBottomLeftButton' .. i or button == 'ElvUI_Bar6Button' .. i then
 					button = 'MULTIACTIONBAR1BUTTON' .. i;
-				elseif button == 'MultiBarBottomRightButton' .. i or button == 'ElvUI_Bar2Button' .. i then
+--				elseif button == 'MultiBarBottomRightButton' .. i or button == 'ElvUI_Bar2Button' .. i then
+				elseif button == 'MultiBarBottomRightButton' .. i or button == 'ElvUI_Bar5Button' .. i then
 					button = 'MULTIACTIONBAR2BUTTON' .. i;
-				elseif button == 'MultiBarRightButton' .. i or button == 'ElvUI_Bar5Button' .. i then
+--				elseif button == 'MultiBarRightButton' .. i or button == 'ElvUI_Bar5Button' .. i then
+				elseif button == 'MultiBarRightButton' .. i or button == 'ElvUI_Bar3Button' .. i then
 					button = 'MULTIACTIONBAR3BUTTON' .. i;
 				elseif button == 'MultiBarLeftButton' .. i or button == 'ElvUI_Bar4Button' .. i then
 					button = 'MultiActionBar4Button' .. i;
+				elseif button == 'ElvUI_Bar2Button' .. i then
+					button = 'ELVUIBAR2BUTTON' .. i;
 				end
 
-				keybind = GetBindingKey(button);				
+				keybind = GetBindingKey(button);
 			end
 		end
 
@@ -847,7 +926,7 @@ function ConROC:CreateDamageOverlay(parent, id)
 	if not frame then
 		frame = CreateFrame('Frame', 'ConROC_DamageOverlay_' .. id, parent);
 	end
-	
+
 	frame:SetParent(parent);
 	frame:SetFrameStrata('MEDIUM');
 	frame:SetFrameLevel('6');
@@ -861,7 +940,7 @@ function ConROC:CreateDamageOverlay(parent, id)
 			alpha = 1;
 		end
 	frame:SetAlpha(alpha);
-	
+
 	local t = frame.texture;
 	if not t then
 		t = frame:CreateTexture('GlowDamageOverlay', 'OVERLAY');
@@ -911,7 +990,7 @@ function ConROC:CreateDefenseOverlay(parent, id)
 	local color = ConROC.db.profile.defenseOverlayColor;
 	t:SetVertexColor(color.r, color.g, color.b);
 	t:SetAlpha(color.a);
-	
+
 	tinsert(self.DefenseFrames, frame);
 	return frame;
 end
@@ -948,7 +1027,7 @@ function ConROC:CreateInterruptOverlay(parent, id)
 	local color = ConROC.db.profile.interruptOverlayColor;
 	t:SetVertexColor(color.r, color.g, color.b);
 	t:SetAlpha(color.a);
-	
+
 	tinsert(self.InterruptFrames, frame);
 	return frame;
 end
@@ -985,7 +1064,7 @@ function ConROC:CreatePurgableOverlay(parent, id)
 	local color = ConROC.db.profile.purgeOverlayColor;
 	t:SetVertexColor(color.r, color.g, color.b);
 	t:SetAlpha(color.a);
-	
+
 	tinsert(self.PurgableFrames, frame);
 	return frame;
 end
@@ -1022,7 +1101,7 @@ function ConROC:CreateTauntOverlay(parent, id)
 	local color = ConROC.db.profile.tauntOverlayColor;
 	t:SetVertexColor(color.r, color.g, color.b);
 	t:SetAlpha(color.a);
-	
+
 	tinsert(self.TauntFrames, frame);
 	return frame;
 end
@@ -1059,7 +1138,7 @@ function ConROC:CreateRaidBuffsOverlay(parent, id)
 	local color = ConROC.db.profile.raidbuffsOverlayColor;
 	t:SetVertexColor(color.r, color.g, color.b);
 	t:SetAlpha(color.a);
-	
+
 	tinsert(self.RaidBuffsFrames, frame);
 	return frame;
 end
@@ -1096,7 +1175,7 @@ function ConROC:CreateMovementOverlay(parent, id)
 	local color = ConROC.db.profile.movementOverlayColor;
 	t:SetVertexColor(color.r, color.g, color.b);
 	t:SetAlpha(color.a);
-	
+
 	tinsert(self.MovementFrames, frame);
 	return frame;
 end
@@ -1133,7 +1212,7 @@ function ConROC:CreateCoolDownOverlay(parent, id)
 	local color = ConROC.db.profile.cooldownOverlayColor;
 	t:SetVertexColor(color.r, color.g, color.b);
 	t:SetAlpha(color.a);
-	
+
 	tinsert(self.CoolDownFrames, frame);
 	return frame;
 end
@@ -1316,7 +1395,7 @@ function ConROC:UpdateButtonGlow()
 
 	if IsAddOnLoaded('ElvUI') then
 		LAB = LibStub:GetLibrary('LibActionButton-1.0-ElvUI');
-		LBG = LibStub:GetLibrary('LibButtonGlow-1.0');
+		LBG = LibStub:GetLibrary('LibCustomGlow-1.0'); --LibStub:GetLibrary('LibButtonGlow-1.0');
 		origShow = LBG.ShowOverlayGlow;
 	elseif IsAddOnLoaded('Bartender4') then
 		LAB = LibStub:GetLibrary('LibActionButton-1.0');
@@ -1513,12 +1592,12 @@ function ConROC:HideMovementGlow(button, id)
 		button.ConROCMovementOverlays[id]:Hide();
 	end
 end
-	
-function ConROC:UpdateRotation()	
+
+function ConROC:UpdateRotation()
 	self = ConROC;
-	
+
 	self:FetchBlizzard();
-	
+
 	if IsAddOnLoaded('Bartender4') then
 		self:FetchBartender4();
 	end
@@ -1526,29 +1605,29 @@ function ConROC:UpdateRotation()
 	if IsAddOnLoaded('ButtonForge') then
 		self:FetchButtonForge();
 	end
-	
+
 	if IsAddOnLoaded('ElvUI') then
 		self:FetchElvUI();
 	end
-	
+
 	if IsAddOnLoaded('Dominos') then
 		self:FetchDominos();
 	end
-	
+
     if IsAddOnLoaded('DiabolicUI') then
         self:FetchDiabolic();
     end
- 
+
     if IsAddOnLoaded('AzeriteUI') then
         self:FetchAzeriteUI();
     end
 end
 
-function ConROC:UpdateDefRotation()	
+function ConROC:UpdateDefRotation()
 	self = ConROC;
-	
+
 	self:DefFetchBlizzard();
-	
+
 	if IsAddOnLoaded('Bartender4') then
 		self:DefFetchBartender4();
 	end
@@ -1556,19 +1635,19 @@ function ConROC:UpdateDefRotation()
 	if IsAddOnLoaded('ButtonForge') then
 		self:DefFetchButtonForge();
 	end
-	
+
 	if IsAddOnLoaded('ElvUI') then
 		self:DefFetchElvUI();
 	end
-	
+
 	if IsAddOnLoaded('Dominos') then
 		self:DefFetchDominos();
 	end
-	
+
     if IsAddOnLoaded('DiabolicUI') then
         self:DefFetchDiabolic();
     end
- 
+
     if IsAddOnLoaded('AzeriteUI') then
         self:DefFetchAzeriteUI();
     end
@@ -1580,7 +1659,7 @@ function ConROC:AddButton(spellID, button, hotkey)
 			self.Spells[spellID] = {};
 		end
 		tinsert(self.Spells[spellID], button);
-		
+
 		if self.Keybinds[spellID] == nil then
 			self.Keybinds[spellID] = {};
 		end
@@ -1604,14 +1683,14 @@ function ConROC:AddStandardButton(button, hotkey)
             if not slot or slot == 0 then
                 slot = ActionButton_CalculateAction(button);
             end
- 
+
             if HasAction(slot) then
                 type, id = GetActionInfo(slot);
             else
                 return;
             end
         end
- 
+
         if type == 'macro' then
             spellId = GetMacroSpell(id);
             if not spellId then
@@ -1633,7 +1712,7 @@ function ConROC:DefAddButton(spellID, button, hotkey)
 			self.DefSpells[spellID] = {};
 		end
 		tinsert(self.DefSpells[spellID], button);
-		
+
 		if self.Keybinds[spellID] == nil then
 			self.Keybinds[spellID] = {};
 		end
@@ -1657,14 +1736,14 @@ function ConROC:DefAddStandardButton(button, hotkey)
             if not slot or slot == 0 then
                 slot = ActionButton_CalculateAction(button);
             end
- 
+
             if HasAction(slot) then
                 type, id = GetActionInfo(slot);
             else
                 return;
             end
         end
- 
+
         if type == 'macro' then
             spellId = GetMacroSpell(id);
             if not spellId then
@@ -1694,9 +1773,9 @@ function ConROC:Fetch()
 	self.Flags = {};
 	self.SpellsGlowing = {};
 	self.WindowsGlowing = {};
-	
+
 	self:FetchBlizzard();
-	
+
 
 	if IsAddOnLoaded('Bartender4') then
 		self:FetchBartender4();
@@ -1705,22 +1784,22 @@ function ConROC:Fetch()
 	if IsAddOnLoaded('ButtonForge') then
 		self:FetchButtonForge();
 	end
-	
+
 	if IsAddOnLoaded('ElvUI') then
 		self:FetchElvUI();
 	end
-	
+
 	if IsAddOnLoaded('Dominos') then
 		self:FetchDominos();
 	end
-	
+
     if IsAddOnLoaded('DiabolicUI') then
         self:FetchDiabolic();
     end
- 
+
     if IsAddOnLoaded('AzeriteUI_Classic') then
         self:FetchAzeriteUI();
-    end	
+    end
 
 	if self.rotationEnabled then
 		self:EnableRotationTimer();
@@ -1736,14 +1815,14 @@ function ConROC:FetchDef()
 	self.Def = nil;
 
 	self:GlowClearDef();
-	self:DefWindowClear();	
+	self:DefWindowClear();
 	self.DefSpells = {};
 	self.Flags = {};
 	self.DefGlowing = {};
 	self.DefWindowsGlowing = {};
-	
+
 	self:DefFetchBlizzard();
-		
+
 	if IsAddOnLoaded('Bartender4') then
 		self:DefFetchBartender4();
 	end
@@ -1751,11 +1830,11 @@ function ConROC:FetchDef()
 	if IsAddOnLoaded('ButtonForge') then
 		self:DefFetchButtonForge();
 	end
-	
+
 	if IsAddOnLoaded('ElvUI') then
 		self:DefFetchElvUI();
 	end
-	
+
 	if IsAddOnLoaded('Dominos') then
 		self:DefFetchDominos();
 	end
@@ -1763,11 +1842,11 @@ function ConROC:FetchDef()
 	if IsAddOnLoaded('DiabolicUI') then
         self:DefFetchDiabolic();
     end
- 
+
     if IsAddOnLoaded('AzeriteUI_Classic') then
         self:DefFetchAzeriteUI();
-    end	
-	
+    end
+
 	if self.defenseEnabled then
 		self:EnableDefenseTimer();
 		self:InvokeNextDef();
@@ -1791,7 +1870,7 @@ function ConROC:FetchBlizzard()
 				local hotkey = barName .. 'Button' .. i;
 				local spellID = select(7, GetPetActionInfo(i));
 				self:AddButton(spellID, button, hotkey);
-			end	
+			end
 		else
 			for i = 1, 12 do
 				local button = _G[barName .. 'Button' .. i];
@@ -1819,11 +1898,11 @@ function ConROC:DefFetchBlizzard()
 				local hotkey = barName .. 'Button' .. i;
 				local spellID = select(7, GetPetActionInfo(i));
 				self:DefAddButton(spellID, button, hotkey);
-			end	
+			end
 		else
 			for i = 1, 12 do
 				local button = _G[barName .. 'Button' .. i];
-				local hotkey = barName .. 'Button' .. i;			
+				local hotkey = barName .. 'Button' .. i;
 				self:DefAddStandardButton(button, hotkey);
 			end
 		end
@@ -1851,13 +1930,13 @@ function ConROC:FetchDominos()
 					end
 
 					tinsert(self.Spells[spellID], button);
-					
+
 					if self.Keybinds[spellID] == nil then
 						self.Keybinds[spellID] = {};
 					end
-					
+
 					tinsert(self.Keybinds[spellID], 'DominosActionButton' .. i);
-										
+
 				end
 			end
 		end
@@ -1886,13 +1965,13 @@ function ConROC:DefFetchDominos()
 					end
 
 					tinsert(self.DefSpells[spellID], button);
-					
+
 					if self.Keybinds[spellID] == nil then
 						self.Keybinds[spellID] = {};
 					end
-					
+
 					tinsert(self.Keybinds[spellID], 'DominosActionButton' .. i);
-					
+
 				end
 			end
 		end
@@ -1929,13 +2008,13 @@ function ConROC:FetchButtonForge()
 				end
 
 				tinsert(self.Spells[spellId], button);
-				
+
 				if self.Keybinds[spellId] == nil then
 					self.Keybinds[spellId] = {};
 				end
-				
+
 				tinsert(self.Keybinds[spellId], 'ButtonForge' .. i);
-				 	
+
 			end
 		end
 	end
@@ -1971,13 +2050,13 @@ function ConROC:DefFetchButtonForge()
 				end
 
 				tinsert(self.DefSpells[spellId], button);
-				
+
 				if self.Keybinds[spellId] == nil then
 					self.Keybinds[spellId] = {};
 				end
-				
+
 				tinsert(self.Keybinds[spellId], 'ButtonForge' .. i);
-				
+
 			end
 		end
 	end
@@ -1985,7 +2064,7 @@ end
 
 function ConROC:FetchElvUI()
 	local ret = false;
-	for x = 1, 10 do
+	for x = 0, 10 do
 		for i = 1, 12 do
 			local button = _G['ElvUI_Bar' .. x .. 'Button' .. i];
 			if button then
@@ -1998,13 +2077,13 @@ function ConROC:FetchElvUI()
 						end
 						ret = true;
 						tinsert(self.Spells[spellId], button);
-						
+
 						if self.Keybinds[spellId] == nil then
 							self.Keybinds[spellId] = {};
 						end
-						
+
 						tinsert(self.Keybinds[spellId], 'ElvUI_Bar' .. x .. 'Button' .. i);
-						 	
+
 					end
 				end
 			end
@@ -2028,13 +2107,13 @@ function ConROC:DefFetchElvUI()
 						end
 						ret = true;
 						tinsert(self.DefSpells[spellId], button);
-						
+
 						if self.Keybinds[spellId] == nil then
 							self.Keybinds[spellId] = {};
 						end
-						
+
 						tinsert(self.Keybinds[spellId], 'ElvUI_Bar' .. x .. 'Button' .. i);
-						
+
 					end
 				end
 			end
@@ -2060,7 +2139,7 @@ function ConROC:FetchBartender4()
 				local hotkey = 'CLICK BT4PetButton' .. i .. ':LeftButton';
 				local spellID = select(7, GetPetActionInfo(i));
 				self:AddButton(spellID, button, hotkey);
-			end	
+			end
 		else
 			for i = 1, 120 do
 				local button = _G[barName .. 'Button' .. i];
@@ -2090,7 +2169,7 @@ function ConROC:DefFetchBartender4()
 				local hotkey = 'CLICK BT4PetButton' .. i .. ':LeftButton';
 				local spellID = select(7, GetPetActionInfo(i));
 				self:DefAddButton(spellID, button, hotkey);
-			end	
+			end
 		else
 			for i = 1, 120 do
 				local button = _G[barName .. 'Button' .. i];
@@ -2255,7 +2334,7 @@ end
 
 function ConROC:AbilityBurst(spell, condition)
 	local incombat = UnitAffectingCombat('player');
-	
+
 	if self.Flags[spell] == nil then
 		self.Flags[spell] = false;
 	end
@@ -2278,9 +2357,9 @@ function ConROC:AbilityInterrupt(spell, condition)
 		if UIFrameIsFlashing(ConROCInterruptWindow) then
 			UIFrameFlashStop(ConROCInterruptWindow);
 			if ConROC.db.profile.unlockWindow == true and ConROC.db.profile.enableInterruptWindow == true then
-				ConROCInterruptWindow:Show();				
-			end	
-		end			
+				ConROCInterruptWindow:Show();
+			end
+		end
 	end
 	if condition and not self.Flags[spell] then
 	local color = ConROC.db.profile.interruptOverlayColor;
@@ -2300,34 +2379,34 @@ function ConROC:AbilityInterrupt(spell, condition)
 		if UIFrameIsFlashing(ConROCInterruptWindow) then
 			UIFrameFlashStop(ConROCInterruptWindow);
 			if ConROC.db.profile.unlockWindow == true and ConROC.db.profile.enableInterruptWindow == true then
-				ConROCInterruptWindow:Show();				
-			end			
-		end		
+				ConROCInterruptWindow:Show();
+			end
+		end
 	end
 end
 
 function ConROC:AbilityPurge(spell, condition)
 	if self.Flags[spell] == nil then
 		self.Flags[spell] = false;
-		self:ClearAbilityPurgeIndependent(spell, spell);		
+		self:ClearAbilityPurgeIndependent(spell, spell);
 		ConROCPurgeWindow:SetSize(ConROC.db.profile.flashIconSize * .25, ConROC.db.profile.flashIconSize * .25);
 		ConROCPurgeWindow.texture:SetVertexColor(.1, .1, .1);
 		if UIFrameIsFlashing(ConROCPurgeWindow) then
 			UIFrameFlashStop(ConROCPurgeWindow);
 			if ConROC.db.profile.unlockWindow == true and ConROC.db.profile.enablePurgeWindow == true then
-				ConROCPurgeWindow:Show();				
+				ConROCPurgeWindow:Show();
 			end
-		end			
+		end
 	end
 	if condition and not self.Flags[spell] then
-	local color = ConROC.db.profile.purgeOverlayColor;	
+	local color = ConROC.db.profile.purgeOverlayColor;
 		self.Flags[spell] = true;
 		self:AbilityPurgeIndependent(spell, spell);
 		ConROCPurgeWindow:SetSize(ConROC.db.profile.flashIconSize * .75, ConROC.db.profile.flashIconSize * .75);
 		ConROCPurgeWindow.texture:SetVertexColor(color.r, color.g, color.b);
 		if not UIFrameIsFlashing(ConROCPurgeWindow) and ConROC.db.profile.enablePurgeWindow then
 			UIFrameFlash(ConROCPurgeWindow, 0.25, 0.25, -1);
-		end		
+		end
 	end
 	if not condition and self.Flags[spell] then
 		self.Flags[spell] = false;
@@ -2337,9 +2416,9 @@ function ConROC:AbilityPurge(spell, condition)
 		if UIFrameIsFlashing(ConROCPurgeWindow) then
 			UIFrameFlashStop(ConROCPurgeWindow);
 			if ConROC.db.profile.unlockWindow == true and ConROC.db.profile.enablePurgeWindow == true then
-				ConROCPurgeWindow:Show();				
-			end			
-		end			
+				ConROCPurgeWindow:Show();
+			end
+		end
 	end
 end
 
@@ -2415,14 +2494,16 @@ function ConROC:GlowSpell(spellID)
 			end
 		end
 	end
-	
+
 	if self.Spells[spellID] ~= nil then
 		for k, button in pairs(self.Spells[spellID]) do
 			self:DamageGlow(button, 'next');
 		end
 		self.SpellsGlowing[spellID] = 1;
 	else
-		self:Print(self.Colors.Error .. 'Spell not found on action bars: ' .. ' ' .. spellName .. ' ' .. spellRank .. ' ' .. '(' .. spellID .. ')' .. ' Check your spellbook.');
+		if not UnitInVehicle("player") then
+			self:Print(self.Colors.Error .. 'Spell not found on action bars: ' .. ' ' .. spellName .. ' ' .. spellRank .. ' ' .. '(' .. spellID .. ')' .. ' Check your spellbook.');
+		end
 	end
 end
 
@@ -2438,14 +2519,16 @@ function ConROC:GlowDef(spellID)
 			end
 		end
 	end
-		
+
 	if self.DefSpells[spellID] ~= nil then
 		for k, button in pairs(self.DefSpells[spellID]) do
 			self:DefenseGlow(button, 'nextdef');
 		end
 		self.DefGlowing[spellID] = 1;
 	else
-		self:Print(self.Colors.Error .. 'Spell not found on action bars: ' .. ' ' .. spellName .. ' ' .. spellRank .. ' ' .. '(' .. spellID .. ')' .. ' Check your spellbook.');
+		if not UnitInVehicle("player") then
+			self:Print(self.Colors.Error .. 'Spell not found on action bars: ' .. ' ' .. spellName .. ' ' .. spellRank .. ' ' .. '(' .. spellID .. ')' .. ' Check your spellbook.');
+		end
 	end
 end
 

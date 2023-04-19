@@ -1,4 +1,5 @@
 ConROC.RaidBuffs = {};
+ConROC.WarningFlags = {};
 
 -- Global cooldown spell id
 -- GlobalCooldown = 61304;
@@ -710,5 +711,24 @@ function ConROC:FormatTime(left)
 		return string.format("%d:%d [M]", minutes, seconds);
 	else
 		return string.format("%d [S]", seconds);
+	end
+end
+
+function ConROC:Warnings(_Message, _Condition)
+	if self.WarningFlags[_Message] == nil then
+		self.WarningFlags[_Message] = 0;
+	end
+	if _Condition then
+		self.WarningFlags[_Message] = self.WarningFlags[_Message] + 1;
+		if self.WarningFlags[_Message] == 1 then
+		print("_Message", _Message);
+			--UIErrorsFrame:TryFlashingExistingMessage(GetChatTypeIndex("SYSTEM"),_Message);
+			UIErrorsFrame:AddExternalErrorMessage(_Message);
+			--UIErrorsFrame:AddMessage(_Message, 1,0,0,1,53);
+		elseif self.WarningFlags[_Message] == 15 then
+			self.WarningFlags[_Message] = 0;
+		end
+	else
+		self.WarningFlags[_Message] = 0;
 	end
 end

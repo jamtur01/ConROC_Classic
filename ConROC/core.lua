@@ -783,11 +783,22 @@ function ConROC:OnEnable()
 	self:RegisterEvent('LEARNED_SPELL_IN_TAB');
 	self:RegisterEvent('CHARACTER_POINTS_CHANGED');
 	self:RegisterEvent('UPDATE_MACROS');
+	self:RegisterEvent("PLAYER_EQUIPMENT_CHANGED");
 
 	self:RegisterEvent('PLAYER_CONTROL_LOST');
 	self:RegisterEvent('PLAYER_CONTROL_GAINED');	
 	
 	self:Print(self.Colors.Info .. 'Initialized');
+end
+
+function ConROC:PLAYER_EQUIPMENT_CHANGED(self, slotID, beingEquipped)
+	local _, _, Class = UnitClass("player")
+	
+	if slotID == 18 then
+		if Class == 5 or Class == 8 or Class == 9 then
+			ConROC:wandEquipmentChanged(slotID);
+		end
+	end
 end
 
 function ConROC:ACTIONBAR_HIDEGRID()
